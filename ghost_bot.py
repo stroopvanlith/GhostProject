@@ -2,6 +2,7 @@ import os
 import sys
 import subprocess
 import telebot
+from playwright.sync_api import sync_playwright
 
 def main():
     # Fix Windows console encoding for Arabic/Unicode characters
@@ -41,8 +42,55 @@ def main():
         
         command = message.text.strip()
         
+        # Check if this is a screenshot command
+        if command.startswith('/show'):
+            # Extract the HTML filename
+            html_file = command[5:].strip()
+            
+            if not html_file:
+                bot.reply_to(message, "❌ يرجى إدخال اسم ملف HTML بعد /show")
+                return
+            
+            # Get the full path to the HTML file
+            full_path = os.path.abspath(html_file)
+            
+            if not os.path.exists(full_path):
+                bot.reply_to(message, f"❌ الملف غير موجود: {html_file}")
+                return
+            
+            print(f"Taking screenshot of: {full_path}")
+            bot.reply_to(message, "📸 جاري التقاط صورة للصفحة...")
+            
+            screenshot_path = "temp_screenshot.png"
+            
+            try:
+                # Use Playwright to take screenshot
+                with sync_playwright() as p:
+                    browser = p.chromium.launch(headless=True)
+                    page = browser.new_page()
+                    page.goto(f"file:///{full_path}")
+                    page.screenshot(path=screenshot_path, full_page=True)
+                    browser.close()
+                
+                # Send the screenshot to the user
+                with open(screenshot_path, 'rb') as photo:
+                    bot.send_photo(message.chat.id, photo, caption=f"📸 Screenshot of {html_file}")
+                
+                # Clean up the temporary file
+                if os.path.exists(screenshot_path):
+                    os.remove(screenshot_path)
+                    
+            except Exception as e:
+                error_msg = f"❌ Error taking screenshot:\n{str(e)}"
+                print(f"Error: {error_msg}")
+                bot.reply_to(message, error_msg)
+                
+                # Clean up if file exists
+                if os.path.exists(screenshot_path):
+                    os.remove(screenshot_path)
+        
         # Check if this is an Aider command
-        if command.startswith('/aider'):
+        elif command.startswith('/aider'):
             # Extract the request after /aider (remove '/aider' and any spaces)
             aider_request = command[6:].strip()
             
