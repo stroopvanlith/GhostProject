@@ -40,44 +40,99 @@ def main():
             return
         
         command = message.text
-        print(f"Executing command: {command}")
         
-        try:
-            # Execute command in Windows command prompt
-            result = subprocess.run(
-                command,
-                shell=True,
-                capture_output=True,
-                text=True,
-                timeout=30,
-                encoding='utf-8',
-                errors='replace'
-            )
+        # Check if this is an Aider command
+        if command.startswith('/aider '):
+            # Extract the request after /aider
+            aider_request = command[7:].strip()
             
-            # Prepare response
-            output = result.stdout.strip() if result.stdout else ""
-            error = result.stderr.strip() if result.stderr else ""
+            if not aider_request:
+                bot.reply_to(message, "❌ يرجى إدخال طلب بعد /aider")
+                return
             
-            if output:
-                response = f"✅ Output:\n{output}"
-            elif error:
-                response = f"❌ Error:\n{error}"
-            else:
-                response = "✅ Command executed successfully (no output)"
+            print(f"Executing Aider command: {aider_request}")
             
-            # Telegram has a message length limit, so split if needed
-            if len(response) > 4096:
-                for i in range(0, len(response), 4096):
-                    bot.reply_to(message, response[i:i+4096])
-            else:
-                bot.reply_to(message, response)
+            # Send thinking message
+            bot.reply_to(message, "🧠 العقل السحابي يفكر ويكتب الكود، يرجى الانتظار...")
+            
+            try:
+                # Execute Aider with the user's request
+                aider_command = f'aider --yes -m "{aider_request}"'
                 
-        except subprocess.TimeoutExpired:
-            bot.reply_to(message, "❌ Command timeout (exceeded 30 seconds)")
-        except Exception as e:
-            error_msg = f"❌ Error executing command:\n{str(e)}"
-            print(f"Error: {error_msg}")
-            bot.reply_to(message, error_msg)
+                result = subprocess.run(
+                    aider_command,
+                    shell=True,
+                    capture_output=True,
+                    text=True,
+                    timeout=300,  # 5 minutes timeout for Aider
+                    encoding='utf-8',
+                    errors='replace'
+                )
+                
+                # Prepare response
+                output = result.stdout.strip() if result.stdout else ""
+                error = result.stderr.strip() if result.stderr else ""
+                
+                if output:
+                    response = f"✅ Aider Output:\n{output}"
+                elif error:
+                    response = f"❌ Aider Error:\n{error}"
+                else:
+                    response = "✅ Aider executed successfully (no output)"
+                
+                # Truncate if too long (Telegram limit is 4096)
+                if len(response) > 4000:
+                    response = response[:4000] + "\n\n... (output truncated)"
+                
+                bot.reply_to(message, response)
+                    
+            except subprocess.TimeoutExpired:
+                bot.reply_to(message, "❌ Aider timeout (exceeded 5 minutes)")
+            except Exception as e:
+                error_msg = f"❌ Error executing Aider:\n{str(e)}"
+                print(f"Error: {error_msg}")
+                bot.reply_to(message, error_msg)
+        
+        else:
+            # Regular Windows shell command
+            print(f"Executing shell command: {command}")
+            
+            try:
+                # Execute command in Windows command prompt
+                result = subprocess.run(
+                    command,
+                    shell=True,
+                    capture_output=True,
+                    text=True,
+                    timeout=30,
+                    encoding='utf-8',
+                    errors='replace'
+                )
+                
+                # Prepare response
+                output = result.stdout.strip() if result.stdout else ""
+                error = result.stderr.strip() if result.stderr else ""
+                
+                if output:
+                    response = f"✅ Output:\n{output}"
+                elif error:
+                    response = f"❌ Error:\n{error}"
+                else:
+                    response = "✅ Command executed successfully (no output)"
+                
+                # Telegram has a message length limit, so split if needed
+                if len(response) > 4096:
+                    for i in range(0, len(response), 4096):
+                        bot.reply_to(message, response[i:i+4096])
+                else:
+                    bot.reply_to(message, response)
+                    
+            except subprocess.TimeoutExpired:
+                bot.reply_to(message, "❌ Command timeout (exceeded 30 seconds)")
+            except Exception as e:
+                error_msg = f"❌ Error executing command:\n{str(e)}"
+                print(f"Error: {error_msg}")
+                bot.reply_to(message, error_msg)
     
     # Print console message
     print("Bot is listening...")
