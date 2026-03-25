@@ -29,7 +29,7 @@ def main():
         bot.reply_to(message, "مرحباً بك أيها القائد، محطة الأشباح متصلة وتنتظر أوامرك")
     
     # Handler for all text messages (command execution)
-    @bot.message_handler(func=lambda message: True)
+    @bot.message_handler(func=lambda message: True, content_types=['text'])
     def execute_command(message):
         # Check authorization
         if AUTHORIZED_CHAT_ID and message.chat.id != AUTHORIZED_CHAT_ID:
@@ -46,12 +46,14 @@ def main():
                 shell=True,
                 capture_output=True,
                 text=True,
-                timeout=30
+                timeout=30,
+                encoding='utf-8',
+                errors='replace'
             )
             
             # Prepare response
-            output = result.stdout if result.stdout else ""
-            error = result.stderr if result.stderr else ""
+            output = result.stdout.strip() if result.stdout else ""
+            error = result.stderr.strip() if result.stderr else ""
             
             if output:
                 response = f"✅ Output:\n{output}"
@@ -70,7 +72,9 @@ def main():
         except subprocess.TimeoutExpired:
             bot.reply_to(message, "❌ Command timeout (exceeded 30 seconds)")
         except Exception as e:
-            bot.reply_to(message, f"❌ Error executing command:\n{str(e)}")
+            error_msg = f"❌ Error executing command:\n{str(e)}"
+            print(f"Error: {error_msg}")
+            bot.reply_to(message, error_msg)
     
     # Print console message
     print("Bot is listening...")
