@@ -39,12 +39,12 @@ def main():
             bot.reply_to(message, "غير مصرح لك بالوصول")
             return
         
-        command = message.text
+        command = message.text.strip()
         
         # Check if this is an Aider command
-        if command.startswith('/aider '):
-            # Extract the request after /aider
-            aider_request = command[7:].strip()
+        if command.startswith('/aider'):
+            # Extract the request after /aider (remove '/aider' and any spaces)
+            aider_request = command[6:].strip()
             
             if not aider_request:
                 bot.reply_to(message, "❌ يرجى إدخال طلب بعد /aider")
