@@ -4,6 +4,9 @@ import subprocess
 import telebot
 
 def main():
+    # Fix Windows console encoding for Arabic/Unicode characters
+    sys.stdout.reconfigure(encoding='utf-8')
+    
     # Read token from environment variable with error handling
     token = os.getenv('TELEGRAM_BOT_TOKEN')
     
