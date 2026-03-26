@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مرشد المحامين السوري - استشارات قانونية فورية</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo::before {
+            content: "⚖️";
+            font-size: 2rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 2rem;
+            font-weight: 500;
+            transition: opacity 0.3s;
+        }
+
+        nav a:hover {
+            opacity: 0.8;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 5rem 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: #ffc107;
+            color: #1e3c72;
+            padding: 1rem 3rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            animation: fadeInUp 0.8s ease-out 0.4s both;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255, 193, 7, 0.3);
+        }
+
+        .hero-image {
+            margin-top: 3rem;
+            animation: fadeInUp 0.8s ease-out 0.6s both;
+        }
+
+        .hero-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 5rem 0;
+            background: white;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #1e3c72;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #1e3c72;
+        }
+
+        .feature-card p {
+            color: #666;
+            line-height: 1.8;
+        }
+
+        /* How It Works */
+        .how-it-works {
+            padding: 5rem 0;
+            background: linear-gradient(to bottom, #f8f9fa, #e9ecef);
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .step {
+            text-align: center;
+            position: relative;
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: #ffc107;
+            color: #1e3c72;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 0 auto 1rem;
+        }
+
+        .step h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: #1e3c72;
+        }
+
+        .step p {
+            color: #666;
+        }
+
+        /* Pricing Section */
+        .pricing {
+            padding: 5rem 0;
+            background: white;
+        }
+
+        .pricing-card {
+            max-width: 500px;
+            margin: 3rem auto;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 3rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+        }
+
+        .price {
+            font-size: 4rem;
+            font-weight: bold;
+            margin: 1rem 0;
+        }
+
+        .price-currency {
+            font-size: 2rem;
+        }
+
+        .price-period {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin: 2rem 0;
+            text-align: right;
+        }
+
+        .pricing-features li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .pricing-features li::before {
+            content: "✓";
+            color: #ffc107;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 5rem 0;
+            background: #f8f9fa;
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .testimonial {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            color: #666;
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        .testimonial-author {
+            font-weight: bold;
+            color: #1e3c72;
+        }
+
+        .testimonial-role {
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 5rem 0;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        /* Footer */
+        footer {
+            background: #1a1a1a;
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: #ffc107;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: #ffc107;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #333;
+            color: #999;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            nav {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">مرشد المحامين السوري</div>
+                <nav>
+                    <a href="#features">المميزات</a>
+                    <a href="#how-it-works">كيف يعمل</a>
+                    <a href="#pricing">الأسعار</a>
+                    <a href="#testimonials">آراء العملاء</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>استشارات قانونية فورية على مدار الساعة</h1>
+            <p>احصل على إجابات دقيقة لاستفساراتك القانونية من خلال مساعد ذكي متخصص في القانون السوري</p>
+            <a href="#pricing" class="cta-button">ابدأ الآن - 25$ شهرياً</a>
+            <div class="hero-image">
+                <img src="https://via.placeholder.com/800x400/1e3c72/ffffff?text=مساعد+قانوني+ذكي+متخصص+في+القانون+السوري" alt="مرشد المحامين السوري">
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <h2 class="section-title">لماذا تختار مرشد المحامين السوري؟</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>إجابات فورية</h3>
+                    <p>احصل على إجابات دقيقة لاستفساراتك القانونية في ثوانٍ معدودة، دون الحاجة للانتظار أو حجز مواعيد</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📚</div>
+                    <h3>متخصص في القانون السوري</h3>
+                    <p>مدرب على القوانين والتشريعات السورية بشكل شامل، مع تحديثات مستمرة لآخر التعديلات القانونية</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>سرية تامة</h3>
+                    <p>جميع استفساراتك محمية بأعلى معايير الأمان والخصوصية، مع ضمان عدم مشاركة بياناتك</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💰</div>
+                    <h3>وفر المال والوقت</h3>
+                    <p>بدلاً من دفع مئات الدولارات لكل استشارة، احصل على استشارات غير محدودة باشتراك شهري واحد</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌙</div>
+                    <h3>متاح 24/7</h3>
+                    <p>خدمة متواصلة على مدار الساعة طوال أيام الأسبوع، متى احتجت إلى استشارة قانونية</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>سهل الاستخدام</h3>
+                    <p>واجهة بسيطة وسهلة عبر تطبيق تيليجرام، اطرح سؤالك واحصل على الإجابة فوراً</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section id="how-it-works" class="how-it-works">
+        <div class="container">
+            <h2 class="section-title">كيف يعمل النظام؟</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>اشترك في الخدمة</h3>
+                    <p>سجل واشترك بسهولة عبر تطبيق تيليجرام بـ 25$ شهرياً فقط</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>اطرح سؤالك</h3>
+                    <p>اكتب استفسارك القانوني بلغة عربية واضحة ومفصلة</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>احصل على الإجابة</h3>
+                    <p>استلم إجابة شاملة ودقيقة مبنية على القانون السوري في ثوانٍ</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>استفسارات غير محدودة</h3>
+                    <p>اطرح أي عدد من الأسئلة دون قيود طوال فترة اشتراكك</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="pricing">
+        <div class="container">
+            <h2 class="section-title">خطة اشتراك واحدة شاملة</h2>
+            <div class="pricing-card">
+                <h3>الاشتراك الشهري</h3>
+                <div class="price">
+                    <span class="price-currency">$</span>25
+                </div>
+                <p class="price-period">شهرياً</p>
+                <ul class="pricing-features">
+                    <li>استشارات قانونية غير محدودة</li>
+                    <li>إجابات فورية على مدار الساعة</li>
+                    <li>تغطية شاملة للقانون السوري</li>
+                    <li>سرية وخصوصية تامة</li>
+                    <li>دعم فني متواصل</li>
+                    <li>تحديثات قانونية مستمرة</li>
+                    <li>إمكانية الإلغاء في أي وقت</li>
+                </ul>
+                <a href="#" class="cta-button">اشترك الآن</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section id="testimonials" class="testimonials">
+        <div class="container">
+            <h2 class="section-title">ماذا يقول عملاؤنا</h2>
+            <div class="testimonial-grid">
+                <div class="testimonial">
+                    <p class="testimonial-text">"خدمة رائعة وفرت علي الكثير من الوقت والمال. الإجابات دقيقة ومفصلة وتساعدني في فهم حقوقي القانونية بشكل أفضل."</p>
+                    <p class="testimonial-author">أحمد الخطيب</p>
+                    <p class="testimonial-role">صاحب شركة تجارية</p>
+                </div>
+                <div class="testimonial">
+                    <p class="testimonial-text">"كمحامي، أستخدم هذه الخدمة للحصول على مراجع سريعة وتأكيد معلومات قانونية. إنها أداة قيمة جداً في عملي اليومي."</p>
+                    <p class="testimonial-author">المحامية سارة العلي</p>
+                    <p class="testimonial-role">محامية ومستشارة قانونية</p>
+                </div>
+                <div class="testimonial">
+                    <p class="testimonial-text">"الخدمة متاحة في أي وقت أحتاجها، والإجابات واضحة ومفهومة حتى لغير المتخصصين. أنصح بها بشدة."</p>
+                    <p class="testimonial-author">محمد السيد</p>
+                    <p class="testimonial-role">موظف في القطاع الخاص</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>ابدأ رحلتك القانونية اليوم</h2>
+            <p>انضم إلى مئات المستخدمين الذين يثقون بمرشد المحامين السوري</p>
+            <a href="#pricing" class="cta-button">اشترك الآن - 25$ شهرياً</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>عن الخدمة</h3>
+                    <p>مرشد المحامين السوري هو مساعد قانوني ذكي متخصص في تقديم استشارات قانونية فورية ودقيقة بناءً على القانون السوري.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>روابط سريعة</h3>
+                    <ul>
+                        <li><a href="#features">المميزات</a></li>
+                        <li><a href="#how-it-works">كيف يعمل</a></li>
+                        <li><a href="#pricing">الأسعار</a></li>
+                        <li><a href="#testimonials">آراء العملاء</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>الدعم</h3>
+                    <ul>
+                        <li><a href="#">الأسئلة الشائعة</a></li>
+                        <li><a href="#">اتصل بنا</a></li>
+                        <li><a href="#">سياسة الخصوصية</a></li>
+                        <li><a href="#">شروط الاستخدام</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>تواصل معنا</h3>
+                    <p>📧 info@syrianlawbot.com</p>
+                    <p>📱 تيليجرام: @SyrianLawBot</p>
+                    <p>🌐 www.syrianlawbot.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 مرشد المحامين السوري. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
