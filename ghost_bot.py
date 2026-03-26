@@ -67,8 +67,13 @@ def main():
                 # Use Playwright to take screenshot
                 with sync_playwright() as p:
                     browser = p.chromium.launch(headless=True)
-                    page = browser.new_page()
-                    page.goto(f"file:///{full_path}")
+                    context = browser.new_context(
+                        viewport={'width': 1920, 'height': 1080},
+                        device_scale_factor=3
+                    )
+                    page = context.new_page()
+                    page.goto(f"file:///{full_path}", wait_until='networkidle')
+                    page.evaluate('document.fonts.ready')
                     page.screenshot(path=screenshot_path, full_page=True)
                     browser.close()
                 
