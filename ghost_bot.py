@@ -72,7 +72,9 @@ def main():
                         device_scale_factor=3
                     )
                     page = context.new_page()
-                    page.goto(f"file:///{full_path}", wait_until='networkidle')
+                    page.goto(f"file:///{full_path}")
+                    page.wait_for_selector('body')
+                    page.wait_for_timeout(2000)
                     page.evaluate('document.fonts.ready')
                     page.screenshot(path=screenshot_path, full_page=True)
                     browser.close()
