@@ -67,8 +67,7 @@ def main():
                 # Use Playwright to take screenshot
                 with sync_playwright() as p:
                     browser = p.chromium.launch(
-                        headless=True,
-                        args=['--force-color-profile=srgb', '--disable-software-rasterizer']
+                        args=['--headless=new', '--force-color-profile=srgb', '--disable-software-rasterizer']
                     )
                     context = browser.new_context(
                         viewport={'width': 1920, 'height': 1080},
@@ -77,15 +76,15 @@ def main():
                     page = context.new_page()
                     page.goto(f"file:///{full_path}")
                     page.wait_for_selector('body')
-                    page.wait_for_timeout(2000)
+                    page.wait_for_timeout(5000)
                     page.evaluate('document.fonts.ready')
                     page.evaluate("document.body.style.backgroundColor = '#ffffff';")
                     page.screenshot(path=screenshot_path, full_page=True, animations="disabled", omit_background=False)
                     browser.close()
                 
-                # Send the screenshot to the user
-                with open(screenshot_path, 'rb') as photo:
-                    bot.send_photo(message.chat.id, photo, caption=f"📸 Screenshot of {html_file}")
+                # Send the screenshot to the user as document (uncompressed)
+                with open(screenshot_path, 'rb') as document:
+                    bot.send_document(message.chat.id, document=document, caption=f"📸 Screenshot of {html_file}")
                 
                 # Clean up the temporary file
                 if os.path.exists(screenshot_path):
