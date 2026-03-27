@@ -1,0 +1,4 @@
+.git/
+.aider/
+node_modules/
+*.log
