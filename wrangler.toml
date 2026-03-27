@@ -4,3 +4,4 @@ main = "src/index.js"
 
 [assets]
 directory = "./"
+binding = "ASSETS"
