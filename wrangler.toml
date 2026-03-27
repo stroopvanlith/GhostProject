@@ -1,0 +1,9 @@
+name = "ghostproject"
+compatibility_date = "2026-03-27"
+main = "src/index.js"
+
+[site]
+bucket = "./"
+
+[[routes]]
+pattern = "/*"
